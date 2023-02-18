@@ -29,20 +29,21 @@
 }
 
 /* Style for application header */
-.application-header {
+.header {
+    position: relative;
 	margin-top:30px;
 }
 
-.application-header .links-container {
-	float:right;
+.header > * > * {
+    display: block;
+    position: relative;
+    line-height: 24px;
 }
 
-.application-header .links-container a:hover {
-    border-bottom: solid 3px #898989;
-}
-
-.application-header .second-row > * {
-	display: inline-block;
+.header-right {
+	position: absolute;
+    right: 0px;
+	top: 0px;
 }
 
 .button-column {
