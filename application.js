@@ -70,10 +70,10 @@ export default class AppSimple extends Application {
 		if (view === "load") return;
 		
 		else if (view == "diagram") {			
-			this.view = new wDiagram(this.elems.view, this.simulation, this.configuration);
+			this.view = new wDiagram(this.elems.view, this.simulation, this.viz);
 		}
 		else if (view === "grid") {
-			this.view = new wGrid(this.elems.view, this.simulation, this.configuration);
+			this.view = new wGrid(this.elems.view, this.simulation, this.viz);
 		}
 		else {
 			this.handle_error(new Error("The base DEVS viewer does not support visualization type " + view));
@@ -83,7 +83,7 @@ export default class AppSimple extends Application {
 	clear() {		
 		Dom.empty(this.elems.view);
 		
-		this.configuration = null;
+		this.viz = null;
 		this.simulation = null;
 		this.view = null;
 	}
@@ -91,19 +91,19 @@ export default class AppSimple extends Application {
 	on_upload_ready(ev) {
 		this.clear();
 		
-		this.configuration = ev.configuration;
+		this.viz = ev.viz;
 		this.simulation = ev.simulation;
 		this.files = ev.files;
 		
-		this.show_view(ev.configuration.type);
+		this.show_view(ev.viz.type);
 		
 		this.widgets.playback.recorder = new Recorder(this.view.canvas);
-		this.widgets.playback.initialize(this.simulation, this.configuration);
-		this.widgets.settings.initialize(this.configuration);	
+		this.widgets.playback.initialize(this.simulation, this.viz);
+		this.widgets.settings.initialize(this.viz);	
 		
-		if (ev.configuration.type == "diagram") this.popups.linker.initialize(this.simulation, this.configuration);	
+		if (ev.viz.type == "diagram") this.popups.linker.initialize(this.simulation, this.viz);	
 		
-		if (ev.configuration.type == "grid") this.popups.palette.initialize(this.simulation, this.configuration);
+		if (ev.viz.type == "grid") this.popups.palette.initialize(this.simulation, this.viz);
 	}
 	
 	on_button_server_loader_click(ev) {
@@ -125,9 +125,9 @@ export default class AppSimple extends Application {
 	}
 	
 	on_button_download_click(ev) {
-		var files = [this.configuration.to_file()];
+		var files = [this.viz.to_file()];
 		
-		if (this.configuration.type == "diagram") files.push(this.files.diagram);
+		if (this.viz.type == "diagram") files.push(this.files.diagram);
 		
 		Zip.save_zip_stream(this.simulation.name, files);
 	}
