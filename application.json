@@ -1,7 +1,7 @@
 {
 	"URLs": {
 		"lab": "https://arslab.sce.carleton.ca/",
-		"viewer": "https://staubibr-stable.github.io/app-simple/index.html",
+		"viewer": "https://staubibr.github.io/app-simple/index.html",
 		"samples": "http://www.sce.carleton.ca/faculty/wainer/wbgraf/doku.php?id=model_samples:start",
 		"mail": "mailto:bruno.st-aubin@carleton.ca?Subject=DEVS WebViewer",
 		"logs": "https://staubibr.github.io/logs-ready/"
