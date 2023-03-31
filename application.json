@@ -12,19 +12,11 @@
             "files": ["ABP.ma", "ABP_output_messages.txt", "ABP_output_state.txt", "diagram.svg"]
         }, {
             "name": "Crime and Drugs",
-			"folder": "Crime and Drugs/Final",
+			"folder": "Crime and Drugs",
             "files": ["3-Finalcrimedrug.ma", "3-Finalcrimedrug.pal", "3-Finalcrimedrug.val", "3-Finalcrimedrug.log"]
         }, {
-            "name": "Classroom CO2",
-			"folder": "CO2",
-            "files": ["computer_lab.ma", "computer_lab.pal", "computer_lab.val", "computer_lab.log"]
-        }, {
-            "name": "COVID",
-			"folder": "COVID",
-            "files": ["covid.ma", "covid.pal", "covid.val", "VN_0.4_0.005.log"]
-        }, {
             "name": "Employee Behaviour",
-			"folder": "Employee Behaviour/2",
+			"folder": "Employee Behaviour",
             "files": ["EmployeeBehaviour.ma", "EmployeeBehaviour.pal", "EmployeeBehaviour.val", "EmployeeBehaviourLOG_1.log"]
         }, {
             "name": "Agricultural Farm",
@@ -43,16 +35,8 @@
 			"folder": "Food Chain",
             "files": ["food_chain.ma", "food_chain.pal", "food_chain.val", "food_chain.log"]
         }, {
-            "name": "Logistic Urban Growth Model #1",
-			"folder": "LUG/1",
-            "files": ["LUG.ma", "LUG.log", "map.pal", "map.val"]
-        }, {
-            "name": "Logistic Urban Growth Model #2",
-			"folder": "LUG/2",
-            "files": ["LUG.ma", "LUG.log", "map.pal", "map.val"]
-        }, {
-            "name": "Logistic Urban Growth Model #3",
-			"folder": "LUG/3",
+            "name": "Logistic Urban Growth Model",
+			"folder": "LUG",
             "files": ["LUG.ma", "LUG.log", "map.pal", "map.val"]
         }, {
             "name": "Lynx & Hare",
@@ -60,7 +44,7 @@
             "files": ["LynxHare.ma", "LynxHare.pal", "LynxHare.log"]
         }, {
             "name": "Sheeps on a Ranch",
-			"folder": "Ranch/hot",
+			"folder": "Ranch",
             "files": ["sheepsHOT.ma", "sheepsHOT.pal", "sheepsHOT.log"]
         }, {
             "name": "Sandpile",
