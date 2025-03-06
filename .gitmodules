@@ -1,0 +1,8 @@
+[submodule "app-framework"]
+    path = app-framework
+    url = https://github.com/Sasisekhar/app-framework.git
+    branch = major-2
+
+[submodule "app-references"]
+    path = app-references
+    url = https://github.com/Sasisekhar/app-references.git
