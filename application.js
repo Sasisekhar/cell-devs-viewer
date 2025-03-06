@@ -1,19 +1,19 @@
 'use strict';
 
-import Application from './app-framework/base/application.js';
-import Popup from './app-framework/ui/popup.js';
+import Application from '../app-framework/base/application.js';
+import Popup from '../app-framework/ui/popup.js';
 import Playback from '../app-framework/widgets/playback.js';
-import ServerLoader from './app-framework/widgets/server-loader.js';
-import Settings from './app-framework/widgets/settings/settings.js';
-import PopupLinker from './app-framework/widgets/linker/popup-linker.js';
-import PopupPalette from './app-framework/widgets/palette/popup-palette.js';
-import Dom from './app-framework/tools/dom.js';
-import Loader from './app-framework/widgets/loader.js';
-import wDiagram from './app-framework/widgets/diagram/w-diagram.js'
-import wGrid from './app-framework/widgets/grid/w-grid.js'
-import AppConfig from './app-framework/components/config.js';
-import Recorder from './app-framework/components/recorder.js';
-import Zip from './app-framework/tools/zip.js';
+import ServerLoader from '../app-framework/widgets/server-loader.js';
+import Settings from '../app-framework/widgets/settings/settings.js';
+import PopupLinker from '../app-framework/widgets/linker/popup-linker.js';
+import PopupPalette from '../app-framework/widgets/palette/popup-palette.js';
+import Dom from '../app-framework/tools/dom.js';
+import Loader from '../app-framework/widgets/loader.js';
+import wDiagram from '../app-framework/widgets/diagram/w-diagram.js'
+import wGrid from '../app-framework/widgets/grid/w-grid.js'
+import AppConfig from '../app-framework/components/config.js';
+import Recorder from '../app-framework/components/recorder.js';
+import Zip from '../app-framework/tools/zip.js';
 
 export default class AppSimple extends Application { 
 

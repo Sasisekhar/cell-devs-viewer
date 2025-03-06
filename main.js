@@ -1,6 +1,6 @@
-import Core from "./app-framework/tools/core.js";
-import Net from "./app-framework/tools/net.js";
-import AppConfig from "./app-framework/components/config.js";
+import Core from "../app-framework/tools/core.js";
+import Net from "../app-framework/tools/net.js";
+import AppConfig from "../app-framework/components/config.js";
 import Application from "./application.js";
 
 var p1 = Core.wait_for_document();
