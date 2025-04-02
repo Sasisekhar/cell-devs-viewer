@@ -1,9 +1,80 @@
 {
-	"URLs": {
-		"lab": "https://arslab.sce.carleton.ca/",
-		"viewer": "https://staubibr.github.io/app-simple/index.html",
-		"samples": "http://www.sce.carleton.ca/faculty/wainer/wbgraf/doku.php?id=model_samples:start",
-		"mail": "mailto:bruno.st-aubin@carleton.ca?Subject=DEVS WebViewer",
-		"logs": "https://staubibr.github.io/logs-ready/"
-	}
+    "URLs": {
+        "lab": "https://arslab.sce.carleton.ca/",
+        "old_viewer": "https://staubibr.github.io/app-simple/index.html [just for documentation, key not in use]",
+        "viewer": "https://devssim.carleton.ca/cell-devs-viewer/",
+        "samples": "http://www.sce.carleton.ca/faculty/wainer/wbgraf/doku.php?id=model_samples:start",
+        "mail": "mailto:bruno.st-aubin@carleton.ca?Subject=DEVS WebViewer",
+        "logs": "https://staubibr.github.io/logs-original/"
+    },
+    "log-files": [{
+            "name": "Alternate Bit Protocol",
+			"folder": "ABP - Cadmium",
+            "files": ["ABP.ma", "ABP_output_messages.txt", "ABP_output_state.txt", "diagram.svg"]
+        }, {
+            "name": "Crime and Drugs",
+			"folder": "Crime and Drugs",
+            "files": ["3-Finalcrimedrug.ma", "3-Finalcrimedrug.pal", "3-Finalcrimedrug.val", "3-Finalcrimedrug.log"]
+        }, {
+            "name": "Employee Behaviour",
+			"folder": "Employee Behaviour",
+            "files": ["EmployeeBehaviour.ma", "EmployeeBehaviour.pal", "EmployeeBehaviour.val", "EmployeeBehaviourLOG_1.log"]
+        }, {
+            "name": "Agricultural Farm",
+			"folder": "Farm",
+            "files": ["farm.ma", "farm.ma", "diagram.svg"]
+        }, {
+            "name": "Fire Spread",
+			"folder": "Fire",
+            "files": ["Fire.ma", "Fire.pal", "Fire.val", "Fire.log"]
+        }, {
+            "name": "Fire And Rain",
+			"folder": "Fire and Rain",
+            "files": ["fireandrain.ma", "fireandrain.pal", "fireandrain.val", "fireandrain.log"]
+        }, {
+            "name": "Food Chain",
+			"folder": "Food Chain",
+            "files": ["food_chain.ma", "food_chain.pal", "food_chain.val", "food_chain.log"]
+        }, {
+            "name": "Logistic Urban Growth Model",
+			"folder": "LUG",
+            "files": ["LUG.ma", "LUG.log", "map.pal", "map.val"]
+        }, {
+            "name": "Lynx & Hare",
+			"folder": "Lynx Hare",
+            "files": ["LynxHare.ma", "LynxHare.pal", "LynxHare.log"]
+        }, {
+            "name": "Sheeps on a Ranch",
+			"folder": "Ranch",
+            "files": ["sheepsHOT.ma", "sheepsHOT.pal", "sheepsHOT.log"]
+        }, {
+            "name": "Sandpile",
+			"folder": "Sandpile",
+            "files": ["sandpileMA.ma", "sandpile.pal", "sandpileLOG.log"]
+        }, {
+            "name": "Settlement Growth",
+            "folder": "Settlement Growth",
+            "files": ["Region.ma", "Region.pal", "Region.log01"]
+        }, {
+            "name": "Smog",
+			"folder": "Smog",
+            "files": ["smog.ma", "smog.pal", "smog.log"]
+        }, {
+            "name": "Tumor Growth",
+			"folder": "Tumor",
+            "files": ["TIS.ma", "TIS.pal", "TIS.log"]
+        }, {
+            "name": "UAV Search",
+			"folder": "UAV",
+            "files": ["UAVSearch.ma", "UAVSearch.pal", "UAVSearch.val", "UAVSearch.log"]
+        }, {
+            "name": "Worm",
+			"folder": "Worm",
+            "files": ["worm.ma", "worm.pal", "worm.val", "worm.log"]
+        }, {
+            "name": "Worm Spread",
+			"folder": "Worm Spreading",
+            "files": ["WormModelling.ma", "WormModelling.val", "WormModelling.LOG", "colour.pal"]
+        }
+    ]
 }

@@ -7,14 +7,11 @@ import ServerLoader from '../app-framework/widgets/server-loader.js';
 import Settings from '../app-framework/widgets/settings/settings.js';
 import PopupLinker from '../app-framework/widgets/linker/popup-linker.js';
 import PopupPalette from '../app-framework/widgets/palette/popup-palette.js';
-import Header from './widgets/header.js';
-import Core from '../app-framework/tools/core.js';
 import Dom from '../app-framework/tools/dom.js';
-import Configuration from '../app-framework/data_structures/configuration/configuration.js';
-import Styler from '../app-framework/components/styler.js';
 import Loader from '../app-framework/widgets/loader.js';
-import DiagramAuto from '../app-framework/widgets/diagram/auto.js'
-import GridAuto from '../app-framework/widgets/grid/auto.js'
+import wDiagram from '../app-framework/widgets/diagram/w-diagram.js'
+import wGrid from '../app-framework/widgets/grid/w-grid.js'
+import AppConfig from '../app-framework/components/config.js';
 import Recorder from '../app-framework/components/recorder.js';
 import Zip from '../app-framework/tools/zip.js';
 
@@ -22,6 +19,11 @@ export default class AppSimple extends Application {
 
 	constructor(container) {		
 		super(container);
+		
+		this.elems.a_lab.href = AppConfig.URLs.lab;
+		this.elems.a_viewer.href = AppConfig.URLs.viewer;
+		this.elems.a_samples.href = AppConfig.URLs.samples;
+		this.elems.a_mail.href = AppConfig.URLs.mail;
 		
 		Dom.add_css(document.body, "Simple");
 		
@@ -39,7 +41,7 @@ export default class AppSimple extends Application {
 			linker: this.popups.linker.widget,
 			playback: this.elems.playback
 		};
-					
+		
 		this.elems.btnRedo.addEventListener('click', this.on_button_redo_click.bind(this));
 		this.elems.btnServer.addEventListener('click', this.on_button_server_loader_click.bind(this));
 		this.elems.btnSettings.addEventListener('click', this.on_button_settings_click.bind(this));
@@ -48,6 +50,7 @@ export default class AppSimple extends Application {
 		this.elems.btnPalette.addEventListener('click', this.on_button_palette_click.bind(this));
 		
 		this.widgets.loader.on("ready", this.on_upload_ready.bind(this));
+		this.widgets.server_loader.on("model-selected", this.on_model_selected.bind(this));
 		this.widgets.server_loader.on("files-ready", this.on_files_loaded.bind(this));
 		
 		this.handle_widget_errors([this.widgets.loader, this.widgets.server_loader]);
@@ -56,34 +59,31 @@ export default class AppSimple extends Application {
 		this.show_view("load");
 	}
 	
-	show_view(view) {
+	show_view(view) {		
 		this.elems.btnSettings.disabled = view == "load";
 		this.elems.btnDownload.disabled = view == "load";
-		this.elems.btnLinker.disabled = view != "DEVS";
-		this.elems.btnPalette.disabled = view != "Cell-DEVS";
+		this.elems.btnLinker.disabled = view != "diagram";
+		this.elems.btnPalette.disabled = view != "grid";
 		
 		Dom.set_css(this.elems.main, `view-${view}`);
 		
 		if (view === "load") return;
 		
-		else if (view == "DEVS") {			
-			this.view = new DiagramAuto(this.elems.view, this.simulation, this.configuration.diagram);
+		else if (view == "diagram") {			
+			this.view = new wDiagram(this.elems.view, this.simulation, this.viz);
 		}
-		else if (view === "Cell-DEVS") {
-			this.view = new GridAuto(this.elems.view, this.simulation, this.configuration.grid);
+		else if (view === "grid") {
+			this.view = new wGrid(this.elems.view, this.simulation, this.viz);
 		}
 		else {
-			this.handle_error(new Error("The base DEVS viewer does not support simulations of type " + view));
+			this.handle_error(new Error("The base DEVS viewer does not support visualization type " + view));
 		}
-		
-		this.view.resize();
-		this.view.redraw();
 	}
 	
-	clear() {
-		if (this.view) this.view.destroy();
+	clear() {		
+		Dom.empty(this.elems.view);
 		
-		this.configuration = null;
+		this.viz = null;
 		this.simulation = null;
 		this.view = null;
 	}
@@ -91,22 +91,19 @@ export default class AppSimple extends Application {
 	on_upload_ready(ev) {
 		this.clear();
 		
-		this.configuration = ev.configuration;
+		this.viz = ev.viz;
 		this.simulation = ev.simulation;
 		this.files = ev.files;
-				
-		this.show_view(ev.simulation.type);
 		
-		this.widgets.playback.recorder = new Recorder(this.view.widget.canvas);
-		this.widgets.playback.initialize(this.simulation, this.configuration.playback);
-		this.widgets.settings.initialize(this.simulation, this.configuration);	
+		this.show_view(ev.viz.type);
 		
-		this.popups.linker.initialize(this.simulation, this.files.diagram);	
+		this.widgets.playback.recorder = new Recorder(this.view.canvas);
+		this.widgets.playback.initialize(this.simulation, this.viz);
+		this.widgets.settings.initialize(this.viz);	
 		
-		if (this.simulation.type != "Cell-DEVS") return;
+		if (ev.viz.type == "diagram") this.popups.linker.initialize(this.simulation, this.viz);	
 		
-		this.popups.palette.initialize(this.simulation, this.configuration);
-		
+		if (ev.viz.type == "grid") this.popups.palette.initialize(this.simulation, this.viz);
 	}
 	
 	on_button_server_loader_click(ev) {
@@ -114,7 +111,7 @@ export default class AppSimple extends Application {
 	}
 	
 	on_button_redo_click(ev) {	
-		this.clear();			
+		this.clear();
 		this.show_view("load");
 	}
 	
@@ -127,21 +124,11 @@ export default class AppSimple extends Application {
 		this.popups.palette.show();
 	}
 	
-	on_button_download_click(ev) {		
-		if (this.files.cd_ma && this.files.cd_log) {
-			var files = [this.configuration.to_file()];
-		}		
+	on_button_download_click(ev) {
+		var files = [this.viz.to_file()];
 		
-		if (this.files.cd_ma && this.files.cadmium_state && this.files.cadmium_output) {
-			var files = [this.configuration.to_file(), this.files.diagram];
-		}
+		if (this.viz.type == "diagram") files.push(this.files.diagram);
 		
-		else {
-			var files = [this.files.structure, this.files.messages, this.configuration.to_file()];
-			
-			if (this.files.diagram) files.push(this.files.diagram);
-		}
-			
 		Zip.save_zip_stream(this.simulation.name, files);
 	}
 	
@@ -150,6 +137,12 @@ export default class AppSimple extends Application {
 		
 		this.files.diagram = this.widgets.linker.svg_file;
 	}
+
+	on_model_selected(ev) {
+		this.clear();
+		this.show_view("load");
+	}
+	
 
 	on_files_loaded(ev) {
 		this.popups.server_loader.hide();
@@ -162,7 +155,16 @@ export default class AppSimple extends Application {
 		
 	html() {
 		return	"<main handle='main'>" +
-					"<div handle='header' widget='App.Widget.Header'></div>" +
+					"<div class='header'>" +
+						"<div class='header-left'>" +
+							"<h1 class='first-row'><a handle='a_lab' target='_blank'>nls(Header_Lab)</a></h1>" +
+							"<h2><a handle='a_viewer' target='_blank'>nls(Header_App)</a></h2>" +
+						"</div>" +
+						"<div class='header-right'>" +
+							"<a handle='a_samples' target='_blank'>nls(Header_Sample)</a>" +
+							"<a handle='a_mail' target='_blank'>nls(Header_Problem)</a>" +
+						"</div>" +
+					"</div>" +
 				    "<div class='centered-row'>" + 
 						"<div class='button-column'>" + 
 						   "<button handle='btnRedo' title='nls(Application_Redo)' class='fas fa-redo'></button>" +
@@ -198,5 +200,9 @@ export default class AppSimple extends Application {
 		nls.add("Application_Linker", "en", "Review links between diagram and simulation structure");
 		nls.add("Popup_SL_Title", "en", "Load from server");
 		nls.add("Popup_Settings_Title", "en", "Settings");
+		nls.add("Header_Lab", "en", "ARSLab");
+		nls.add("Header_App", "en", "DEVS Web Viewer");
+		nls.add("Header_Sample", "en", "&#9733; samples");
+		nls.add("Header_Problem", "en", "&#9749; report a problem");
 	}
 }
